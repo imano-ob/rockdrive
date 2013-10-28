@@ -1,0 +1,78 @@
+/*
+ * Funções básicas usadas por todos os personagens (player, inimigos) do jogo)
+ */
+
+using UnityEngine;
+using System.Collections;
+
+public class Character : MonoBehaviour {
+	
+	public bool friend=false;
+	public int maxHp=10;
+	public int hp=10;
+	public int level=1;
+	public int power=1;
+	public char type='f';
+	
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	
+	
+	// Dano e morte
+	void Damage(DamageParams dp){
+		
+		Debug.Log(this.name+" hit type-"+type+" with:"+dp.type ); 
+		
+		if(type=='f'){
+			Debug.Log("lol");
+			if(dp.type=='w') superEffective(dp);
+			if(dp.type=='f') normalEffective(dp);
+			if(dp.type=='g') notEffective(dp);
+	}
+		if(type=='w'){
+			if(dp.type=='g') superEffective(dp);
+			if(dp.type=='w') normalEffective(dp);
+			if(dp.type=='f') notEffective(dp);
+	}
+		if(type=='g'){
+			if(dp.type=='f') superEffective(dp);
+			if(dp.type=='g') normalEffective(dp);
+			if(dp.type=='w') notEffective(dp);
+	}
+		
+	}
+	
+	void superEffective(DamageParams dp){
+		hp= (int)System.Math.Round(hp-dp.damage*(float)1.25f);	
+		Debug.Log(this.name+" hit for "+dp.damage*(float)1.25f+"! Super Effective!"); 
+		checkDeath();
+	}
+	void normalEffective(DamageParams dp){
+		hp= hp-dp.damage;
+		Debug.Log(this.name+" hit for "+dp.damage+"!"); 
+		checkDeath();
+	}
+	void notEffective(DamageParams dp){
+		hp= (int)System.Math.Round(hp-dp.damage*0.75f);	
+		Debug.Log(this.name+" hit for "+dp.damage*(float)0.75f+"! It's not very effective!"); 
+		checkDeath();
+	}
+	
+	void checkDeath(){
+		Debug.Log("Checking for death HP:"+maxHp);
+		if(hp<=0) Destroy(gameObject);
+	}
+	
+	//Tipo
+	void changeType(char newType){
+		type= newType;	
+		Debug.Log("New Type: "+newType);
+	}
+}
