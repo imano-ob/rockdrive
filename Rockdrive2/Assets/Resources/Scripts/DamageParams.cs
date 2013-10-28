@@ -5,10 +5,12 @@ public class DamageParams {
 	
 	public int damage;
 	public char type;
+	public bool friendly;
 	
-	public DamageParams(int dam,char typ){
+	public DamageParams(int dam,char typ,bool friend){
 		damage=dam;
 		type=typ;
+		friendly=friend;
 		Debug.Log("DP "+damage+" "+type);
 	}
 	// Use this for initialization
@@ -27,5 +29,9 @@ public class DamageParams {
 	
 	int getDamage(){
 		return damage;	
+	}
+	
+	bool getFriendly(){
+		return friendly;	
 	}
 }

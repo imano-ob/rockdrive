@@ -10,7 +10,8 @@ public class SpriteAnim : MonoBehaviour {
 	public float spriteHeight=24;
 	public string[] spriteType;
 	
-	public float spriteSheetSize=128;//Needed to overcome Unity's stupid limitations
+	public float spriteSheetWidth=128;//Needed to overcome Unity's stupid limitations
+	public float spriteSheetHeight=128;
 	
 	public float anim_delay=5;
 	public float delay_current=0;
@@ -28,7 +29,7 @@ public class SpriteAnim : MonoBehaviour {
 		sprite= this.gameObject;
 		StartCoroutine(Animate());
 		//sprite.renderer.material.mainTextureScale= new Vector2(1f/((spriteWidth-spriteSheetSize-anim_sprites*spriteWidth)/spriteSheetSize),1f/sides);
-		sprite.renderer.material.mainTextureScale= new Vector2((spriteWidth/spriteSheetSize),(spriteHeight/spriteSheetSize));
+		sprite.renderer.material.mainTextureScale= new Vector2((spriteWidth/spriteSheetWidth),(spriteHeight/spriteSheetHeight));
 	}
 	
 	void changeState(string side){
@@ -43,7 +44,7 @@ public class SpriteAnim : MonoBehaviour {
 			if(spriteType[i].Equals(side))sideNumber=(int)sides-i-1;
 		}
 		
-		sprite.renderer.material.SetTextureOffset("_MainTex",new Vector2(sprite.renderer.material.mainTextureOffset.x,((spriteSheetSize-spriteHeight*sides)/spriteSheetSize)+(sideNumber*spriteHeight/spriteSheetSize)));
+		sprite.renderer.material.SetTextureOffset("_MainTex",new Vector2(sprite.renderer.material.mainTextureOffset.x,((spriteSheetHeight-spriteHeight*sides)/spriteSheetHeight)+(sideNumber*spriteHeight/spriteSheetHeight)));
 	}
 	
 	void setMoving(bool state){
@@ -72,12 +73,21 @@ public class SpriteAnim : MonoBehaviour {
 				anim_current++;
 				if(anim_current>=anim_sprites)anim_current=0;
 				//float dx=(float)(anim_sprites/spriteSheetSize)*(float)(spriteWidth-spriteSheetSize+anim_current*spriteWidth);
-				float dx= (spriteWidth)/spriteSheetSize;
+				float dx= (spriteWidth)/spriteSheetWidth;
 				//Debug.Log("dx "+dx.ToString());
 				sprite.renderer.material.SetTextureOffset("_MainTex",new Vector2(dx*(anim_current),sprite.renderer.material.mainTextureOffset.y));
 				
 				//sprite.renderer.material.mainTextureOffset.Set(0.25f*anim_current,sprite.renderer.material.mainTextureOffset.y);
 			}
 		}	
+	}
+	
+	void changeType(char newType){
+		
+		if (newType=='f')gameObject.renderer.material.SetTexture("_MainTex",Resources.Load("Textures/"+this.name+"Fire") as Texture);
+		if (newType=='w')gameObject.renderer.material.SetTexture("_MainTex",Resources.Load("Textures/"+this.name+"Water") as Texture);
+		if (newType=='g')gameObject.renderer.material.SetTexture("_MainTex",Resources.Load("Textures/"+this.name+"Grass") as Texture);
+		
+		
 	}
 }

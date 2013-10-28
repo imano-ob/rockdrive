@@ -11,13 +11,7 @@ public class PlayerElementalControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown("a")){
-			previousType();
-		}
 		
-		if(Input.GetKeyDown("c")){
-			nextType();
-		}
 	}
 	
 	void previousType(){

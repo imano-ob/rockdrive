@@ -13,7 +13,8 @@ public class Character : MonoBehaviour {
 	public int level=1;
 	public int power=1;
 	public char type='f';
-	
+	public string state;
+	bool facingRight=true;
 	// Use this for initialization
 	void Start () {
 	
@@ -24,29 +25,36 @@ public class Character : MonoBehaviour {
 	
 	}
 	
+	void changeState(string newState){
+		state=newState;	
+		if(state=="stopleft"||state=="runleft"||state=="jumpleft")facingRight=false;
+		if(state=="stopright"||state=="runright"||state=="jumpright")facingRight=true;
+	}
 	
 	// Dano e morte
 	void Damage(DamageParams dp){
 		
-		Debug.Log(this.name+" hit type-"+type+" with:"+dp.type ); 
+		 Debug.Log(this.name);
 		
-		if(type=='f'){
-			Debug.Log("lol");
-			if(dp.type=='w') superEffective(dp);
-			if(dp.type=='f') normalEffective(dp);
-			if(dp.type=='g') notEffective(dp);
-	}
-		if(type=='w'){
-			if(dp.type=='g') superEffective(dp);
-			if(dp.type=='w') normalEffective(dp);
-			if(dp.type=='f') notEffective(dp);
-	}
-		if(type=='g'){
-			if(dp.type=='f') superEffective(dp);
-			if(dp.type=='g') normalEffective(dp);
-			if(dp.type=='w') notEffective(dp);
-	}
-		
+		if(friend!=dp.friendly){
+			Debug.Log(this.name+" hit type-"+type+" with:"+dp.type );
+			if(type=='f'){
+				Debug.Log("lol");
+				if(dp.type=='w') superEffective(dp);
+				if(dp.type=='f') normalEffective(dp);
+				if(dp.type=='g') notEffective(dp);
+		}
+			if(type=='w'){
+				if(dp.type=='g') superEffective(dp);
+				if(dp.type=='w') normalEffective(dp);
+				if(dp.type=='f') notEffective(dp);
+		}
+			if(type=='g'){
+				if(dp.type=='f') superEffective(dp);
+				if(dp.type=='g') normalEffective(dp);
+				if(dp.type=='w') notEffective(dp);
+		}
+		}
 	}
 	
 	void superEffective(DamageParams dp){

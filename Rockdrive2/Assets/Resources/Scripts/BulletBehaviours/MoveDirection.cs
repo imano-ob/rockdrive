@@ -11,6 +11,9 @@ public class MoveDirection : MonoBehaviour {
 		transform.Rotate(new Vector3(0,angle,0));
 	}
 	
+	void setDirection(int val){
+		angle=val;	
+	}
 	// Update is called once per frame
 	void Update () {
 		
