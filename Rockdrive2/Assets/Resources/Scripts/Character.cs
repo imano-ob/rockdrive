@@ -15,6 +15,10 @@ public class Character : MonoBehaviour {
 	public char type='f';
 	public string state;
 	bool facingRight=true;
+	public bool damageEnabled;
+	public bool damageDelayEnabled;
+	public int damageDelay;
+	int currentDamageDelay;
 	// Use this for initialization
 	void Start () {
 	
@@ -27,8 +31,10 @@ public class Character : MonoBehaviour {
 	
 	void changeState(string newState){
 		state=newState;	
+		bool facingnow=facingRight;
 		if(state=="stopleft"||state=="runleft"||state=="jumpleft")facingRight=false;
 		if(state=="stopright"||state=="runright"||state=="jumpright")facingRight=true;
+		if(facingnow!=facingRight)gameObject.BroadcastMessage("changeDirection",facingRight);
 	}
 	
 	// Dano e morte
@@ -55,6 +61,11 @@ public class Character : MonoBehaviour {
 				if(dp.type=='w') notEffective(dp);
 		}
 		}
+	}
+	
+	void Knockback(float force){
+		CharacterController controller= gameObject.GetComponent("CharacterController")as CharacterController;
+		//Vector3 newVelcontroller.velocity
 	}
 	
 	void superEffective(DamageParams dp){

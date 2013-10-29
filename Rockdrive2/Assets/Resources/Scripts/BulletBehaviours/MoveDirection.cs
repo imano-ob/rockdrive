@@ -14,6 +14,10 @@ public class MoveDirection : MonoBehaviour {
 	void setDirection(int val){
 		angle=val;	
 	}
+	void setSide(bool val){
+		if(val==true)angle=0;
+		else angle=180;
+	}
 	// Update is called once per frame
 	void Update () {
 		

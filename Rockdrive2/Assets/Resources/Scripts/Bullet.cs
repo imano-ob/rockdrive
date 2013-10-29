@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour {
 	public string types="f";
 	public bool friendly=true;
 	public bool pierce=false;
+	public float ttl=50;
 	public Bullet(int dam,char typ){
 		damage=dam;
 		type=typ;
@@ -19,13 +20,21 @@ public class Bullet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		type=types[0];
+		StartCoroutine(LivingTime());
 	}
 	
 	
+	IEnumerator LivingTime(){
+		while(ttl>0){
+			ttl--;
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
+		Destroy(gameObject);
+	}
 	void OnTriggerEnter(Collider target){
 		Character targetData= target.GetComponent("Character")as Character;
 		if( targetData!=null && targetData.friend!=friendly){
-			Debug.Log("DUCK!!!");
+			//Debug.Log("DUCK!!!");
 			DamageParams damp= new DamageParams(damage,type,friendly);
 			Debug.Log("Criar DP "+damage+" "+type+" friend-"+friendly+" para "+target.gameObject.name);
 			target.BroadcastMessage("Damage",damp);
@@ -55,4 +64,6 @@ public class Bullet : MonoBehaviour {
 	void setFriendly(bool val){
 		friendly=val;	
 	}
+	
+	
 }

@@ -9,7 +9,7 @@ public class SpriteAnim : MonoBehaviour {
 	public float spriteWidth=24;
 	public float spriteHeight=24;
 	public string[] spriteType;
-	
+	public string currentState="jumpright";
 	public float spriteSheetWidth=128;//Needed to overcome Unity's stupid limitations
 	public float spriteSheetHeight=128;
 	
@@ -19,7 +19,8 @@ public class SpriteAnim : MonoBehaviour {
 	string side="down";
 	public GameObject sprite;
 	public bool moving=true;
-	
+	public bool shooting=false;
+	public string shootingTag="fire";
 	CharacterController player;
 	
 	// Use this for initialization
@@ -33,7 +34,10 @@ public class SpriteAnim : MonoBehaviour {
 	}
 	
 	void changeState(string side){
+		currentState=side;
 		int sideNumber=0;
+		if(shooting==true) side= shootingTag+side;
+		//Debug.Log(side);
 		/*
 		if(side=="down")sideNumber=3;
 		if(side=="left")sideNumber=2;
@@ -47,6 +51,15 @@ public class SpriteAnim : MonoBehaviour {
 		sprite.renderer.material.SetTextureOffset("_MainTex",new Vector2(sprite.renderer.material.mainTextureOffset.x,((spriteSheetHeight-spriteHeight*sides)/spriteSheetHeight)+(sideNumber*spriteHeight/spriteSheetHeight)));
 	}
 	
+	void Fire(){
+		shooting=true;
+		changeState(currentState);
+		
+	}
+	void stopFire(){
+		shooting=false;	
+		changeState(currentState);
+	}
 	void setMoving(bool state){
 		//moving=state;
 		if(state==true)StartCoroutine(Animate());

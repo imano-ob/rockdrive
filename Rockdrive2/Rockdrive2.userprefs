@@ -1,15 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Gun.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\Character.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\SpriteAnim.cs" Line="38" Column="32" />
+      <File FileName="Assets\Resources\Scripts\SpriteAnim.cs" Line="40" Column="5" />
       <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" Line="35" Column="1" />
       <File FileName="Assets\Standard Assets\Scripts\Camera Scripts\SmoothFollow.js" Line="32" Column="52" />
-      <File FileName="Assets\Resources\Scripts\Character.cs" Line="27" Column="2" />
-      <File FileName="Assets\Resources\Scripts\PlayerStateControl.cs" Line="72" Column="44" />
+      <File FileName="Assets\Resources\Scripts\Character.cs" Line="21" Column="25" />
+      <File FileName="Assets\Resources\Scripts\PlayerStateControl.cs" Line="88" Column="51" />
       <File FileName="Assets\Resources\Scripts\CharState.cs" Line="9" Column="34" />
       <File FileName="Assets\Resources\Scripts\PlayerElementalControl.cs" Line="14" Column="3" />
-      <File FileName="Assets\Resources\Scripts\Gun.cs" Line="18" Column="11" />
+      <File FileName="Assets\Resources\Scripts\Gun.cs" Line="98" Column="24" />
+      <File FileName="Assets\Resources\Scripts\Bullet.cs" Line="34" Column="21" />
+      <File FileName="Assets\Resources\Scripts\BulletBehaviours\MoveDirection.cs" Line="17" Column="2" />
+      <File FileName="Assets\Resources\Scripts\BulletBehaviours\MoveSinusoidal.cs" Line="30" Column="3" />
+      <File FileName="Assets\Resources\Scripts\DamagePlayerOnTouch.cs" Line="24" Column="35" />
+      <File FileName="Assets\Resources\Scripts\ImpactReceiver.cs" Line="5" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

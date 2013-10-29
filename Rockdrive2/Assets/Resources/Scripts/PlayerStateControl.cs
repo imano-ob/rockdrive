@@ -2,21 +2,26 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerStateControl : MonoBehaviour {
-	public string currentState;
+	public string currentState="jumpright";
 	public bool facingRight;
 	public bool rightPressed=false;
 	public bool leftPressed=false;
 	public bool jumping;
 	public bool shooting;
+	public int shootingDelay=10;
+	int shootingCurrentDelay;
 	public bool grounded=false;
 	bool pastFacingRight=false,pastRightPressed=false,pastLeftPressed=false,pastJumping=false,pastGrounded=false;
 	public bool animate=true;
 	CharacterController player;
+	Character playerData;
 	
 	// Use this for initialization
 	void Start () {
 		facingRight=true;
 		player= gameObject.GetComponent("CharacterController")as CharacterController;
+		gameObject.BroadcastMessage("changeState",currentState);
+		playerData=gameObject.GetComponent("Character")as Character;
 		//playerCharacter= gameObject.GetComponent("Character")as Character;
 		//StartCoroutine(UpdateSprite());
 	}
@@ -74,8 +79,29 @@ public class PlayerStateControl : MonoBehaviour {
 		
 			if(Input.GetKeyDown("x")){
 				gameObject.BroadcastMessage("Fire");
+				shooting=true;
+				if(playerData.type!='w')
+					StartCoroutine(shootDelay());
 			}
 		
+			if(Input.GetKeyUp("x") && playerData.type=='w'){
+				gameObject.BroadcastMessage("stopFireImmediate");
+				StartCoroutine(shootDelay());
+		}
+			
+		
+	}
+	
+	IEnumerator shootDelay(){
+		shootingCurrentDelay=0;
+		
+		while(shootingCurrentDelay<=shootingDelay){
+			
+			shootingCurrentDelay++;
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
+		shooting=false;
+		gameObject.BroadcastMessage("stopFire");
 	}
 	
 	void UpdateSprite(){
