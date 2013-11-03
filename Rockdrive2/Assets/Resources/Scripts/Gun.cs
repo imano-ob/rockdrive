@@ -23,7 +23,7 @@ public class Gun : MonoBehaviour {
 	public string[] fireBulletTable;
 	public string[] waterBulletTable;
 	public string[] grassBulletTable;
-	bool breakFire=false;
+	public bool breakFire=false;
 	// Use this for initialization
 	void Start () {
 	
@@ -75,8 +75,7 @@ public class Gun : MonoBehaviour {
 		int i;
 		if(facingRight==true)i=1;
 			else i=-1;
-		//GameObject bullet= Resources.Load("Bullets/FireBullet1")as GameObject;
-		//bullet.transform.position=gameObject.transform.position;
+		
 		GameObject bullet= Instantiate(Resources.Load("Bullets/"+bulletName)as GameObject,transform.position+new Vector3(i*centerDiff,0,0),Quaternion.Euler(new Vector3(90,180,0) ))as GameObject;
 		bullet.BroadcastMessage("setFriendly",true);
 		if(facingRight==true)bullet.BroadcastMessage("setSide",true);
@@ -91,13 +90,15 @@ public class Gun : MonoBehaviour {
 	}
 	
 	void stopFire(){
-		breakFire=true;
+		//breakFire=true;
 		StopCoroutine("FiringDelay");
 	}
 	
-	void stopFireImmediate(){
+	IEnumerator stopFireImmediate(){
 		breakFire=true;
 		StopCoroutine("FiringDelay");
+		yield return null;
+		//breakFire=false;
 	}
 	
 	IEnumerator FiringDelay(){
@@ -109,7 +110,7 @@ public class Gun : MonoBehaviour {
 				yield return new WaitForSeconds(Time.deltaTime);
 			}
 			
-			FireBullet ();
+			//FireBullet ();
 		}
 		
 		if(type=='g'){
@@ -120,7 +121,7 @@ public class Gun : MonoBehaviour {
 				yield return new WaitForSeconds(Time.deltaTime);
 			}
 			
-			FireBullet ();
+			//FireBullet ();
 		}
 		
 		if(type=='w'){

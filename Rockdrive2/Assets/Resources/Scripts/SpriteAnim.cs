@@ -28,7 +28,7 @@ public class SpriteAnim : MonoBehaviour {
 		player= gameObject.GetComponent("CharacterController")as CharacterController;
 		
 		sprite= this.gameObject;
-		StartCoroutine(Animate());
+		//StartCoroutine(Animate());
 		//sprite.renderer.material.mainTextureScale= new Vector2(1f/((spriteWidth-spriteSheetSize-anim_sprites*spriteWidth)/spriteSheetSize),1f/sides);
 		sprite.renderer.material.mainTextureScale= new Vector2((spriteWidth/spriteSheetWidth),(spriteHeight/spriteSheetHeight));
 	}
@@ -62,7 +62,7 @@ public class SpriteAnim : MonoBehaviour {
 	}
 	void setMoving(bool state){
 		//moving=state;
-		if(state==true)StartCoroutine(Animate());
+		if(state==true)moving=true;
 		else {
 		//	sprite.renderer.material.SetTextureOffset("_MainTex",new Vector2(0,sprite.renderer.material.mainTextureOffset.y));
 		//	anim_current=0;
@@ -75,9 +75,9 @@ public class SpriteAnim : MonoBehaviour {
 		
 	}
 	
-	IEnumerator Animate(){
-		while(moving==true){
-			yield return new WaitForSeconds(Time.deltaTime);
+	void FixedUpdate(){
+		if(moving==true){
+			//yield return new WaitForSeconds(Time.deltaTime);
 			delay_current++;
 			//Debug.Log("boijo "+anim_current.ToString());
 			if(delay_current>=anim_delay){

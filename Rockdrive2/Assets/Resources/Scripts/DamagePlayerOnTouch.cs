@@ -5,7 +5,7 @@ public class DamagePlayerOnTouch : MonoBehaviour {
 
 	public string type="f";
 	public int damage= 1;
-	public float knockback= 1f;
+	public float knockback= 30f;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,10 +18,11 @@ public class DamagePlayerOnTouch : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider col){
 		if(col.name=="Player"){
-			DamageParams dp= new DamageParams(damage,type[0],false);
+			if(transform.position.x>=col.transform.position.x)knockback=-1*knockback;
+			DamageParams dp= new DamageParams(damage,type[0],false,new Vector3(knockback,10f,0));
+			
 			col.BroadcastMessage("Damage",dp);
-			//col.BroadcastMessage("Knockback",knockback);
-			col.BroadcastMessage("Knockback",new Vector3(-20f,10f,0));
+			
 		}
 	}
 }
