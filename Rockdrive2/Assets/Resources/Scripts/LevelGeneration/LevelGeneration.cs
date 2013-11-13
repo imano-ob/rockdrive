@@ -16,10 +16,25 @@ public class LevelGeneration : MonoBehaviour {
 	public int[] roomEntrance;
 	public int[] roomExit;
 	public int stageLenght=1;
-	public int[,] roomData;
+	public int[,,] roomData;
+	public Vector3 roomTop;
+	public int totalRooms= 5;
+	public int currentRoom=0;
 	// Use this for initialization
 	void Start () {
-		roomData= new int[roomWidth+1,roomHeight+1];
+		while(totalRooms>0){
+			generateNextRoom();
+			totalRooms--;
+		}
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	
+	void generateNextRoom(){
+		roomData= new int[roomWidth+1,roomHeight+1,50];
 		Debug.Log("1");
 		
 		
@@ -27,12 +42,18 @@ public class LevelGeneration : MonoBehaviour {
 		//Fills out the borders
 		for(int i=0;i<=roomWidth;i++){
 			for(int j=0;j<=roomHeight;j++){
-				if(i==0||i==roomWidth||j==0||j==roomHeight)roomData[i,j]=1;
-				else roomData[i,j]=0;
+				if(i==0||i==roomWidth||j==0||j==roomHeight)roomData[i,j,currentRoom]=1;
+				else roomData[i,j,currentRoom]=0;
 			}
 		}
 		
-		
+		//Hollows out borders between rooms
+		for(int i=0;i<=roomWidth;i++){
+			for(int j=0;j<=roomHeight;j++){
+				if(i==0 && j==1 && currentRoom!=0) roomData[i,j,currentRoom]=0;
+				if(i==roomWidth && j==1) roomData[i,j,currentRoom]=0;
+			}
+		}
 		
 		
 		
@@ -41,8 +62,8 @@ public class LevelGeneration : MonoBehaviour {
 		int numberHoles= Random.Range(minHoles,maxHoles);
 		while(holesAdded< numberHoles){
 			int holePos= Random.Range(0,roomWidth);
-			if(roomData[holePos,0]!=0){
-				roomData[holePos,0]=0;
+			if(roomData[holePos,0,currentRoom]!=0){
+				roomData[holePos,0,currentRoom]=0;
 				holesAdded++;
 			}
 		}
@@ -53,8 +74,8 @@ public class LevelGeneration : MonoBehaviour {
 		//Finally, creates the blocks
 		for(int i=0;i<=roomWidth;i++){	
 			for(int j=0;j<=roomHeight;j++){
-				if(roomData[i,j]==1){
-					Vector3 roomPosition = new Vector3(i,j,0);
+				if(roomData[i,j,currentRoom]==1){
+					Vector3 roomPosition = new Vector3(i,j,0)+roomTop;
 					
 					block= Instantiate(Resources.Load("LevelPieces/Block"),roomPosition,Quaternion.identity) as GameObject;
 					//block.transform.parent= levelContainer.transform;
@@ -62,12 +83,9 @@ public class LevelGeneration : MonoBehaviour {
 			}
 		}
 		
+		roomTop=roomTop+ new Vector3(roomWidth,0,0);
+		currentRoom++;
 		//block= Instantiate(Resources.Load("LevelPieces/Block"),roomPosition,roomRotation) as GameObject;
 		//block.transform.parent= levelContainer.transform;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
