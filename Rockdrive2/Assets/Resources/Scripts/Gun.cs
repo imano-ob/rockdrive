@@ -8,21 +8,24 @@ public class Gun : MonoBehaviour {
 	public char type='f';
 	public int level=1;
 	public bool isPlayer=false;
-	public string bulletName="GenericBullet";
+	public string bulletName="GenericBullet";//Name of the current bullet prefab
 	public bool hold=false;
 	public bool charge=false;
 	public int chargetime=1;
 	public bool facingRight=true;
-	public float centerDiff=0;
+	
+	public float centerDiff=0;//Distance from the center of the gun from where the bullets appear
+	//Delays between bullets
 	public int fireDelay=10;
 	public int waterDelay=5;
 	public int grassDelay=10;
+	//Current frame of delay
 	int currentFireDelay=0;
 	public bool multiFire;
-	public bool friendly=true;
-	public string[] fireBulletTable;
-	public string[] waterBulletTable;
-	public string[] grassBulletTable;
+	public bool friendly=true;// if the character is friendly to the player
+	public string[] fireBulletTable;//tabela de tiros de fogo, por nivel
+	public string[] waterBulletTable;//idem, agua
+	public string[] grassBulletTable;//idem, grama
 	public bool breakFire=false;
 	// Use this for initialization
 	void Start () {
@@ -34,11 +37,13 @@ public class Gun : MonoBehaviour {
 	
 	}
 	
+	//Updates the character level stored on the gun
 	void UpdateLevel(int newLevel){
 		level=newLevel;
 		checkBullet();
 	}
 	
+	//Changes the gun's type
 	void changeType(char newType){
 		
 		type=newType;
@@ -52,6 +57,7 @@ public class Gun : MonoBehaviour {
 		checkBullet();
 	}
 	
+	//Checks which bullet to fire (with type and level)
 	void checkBullet(){
 		if(type=='w')
 			for(int i=0;i<waterBulletTable.Length;i++)
@@ -63,14 +69,19 @@ public class Gun : MonoBehaviour {
 			for(int i=0;i<grassBulletTable.Length;i++)
 				if(i<=level)bulletName=grassBulletTable[i];
 	}
+	
+	//Changes the direction of the bullet
 	void changeDirection(bool newDir){
 		facingRight=newDir;	
 	}
+	
+	//Starts the firing process, call this with BroadcastMessage to fire
 	void Fire(){
 		breakFire=false;
 		FireBullet();
 	}
 	
+	//Spawns the bullet
 	void FireBullet(){
 		int i;
 		if(facingRight==true)i=1;
@@ -81,6 +92,7 @@ public class Gun : MonoBehaviour {
 		if(facingRight==true)bullet.BroadcastMessage("setSide",true);
 			else bullet.BroadcastMessage("setSide",false);
 		
+		//For multifiring bullets (water)
 		if(multiFire==true){
 			if(breakFire==false){
 				StartCoroutine(FiringDelay());
@@ -89,11 +101,13 @@ public class Gun : MonoBehaviour {
 		}
 	}
 	
+	//Stops fire
 	void stopFire(){
 		//breakFire=true;
 		StopCoroutine("FiringDelay");
 	}
 	
+	//Stops fire (for water, seriously need to change this later)
 	IEnumerator stopFireImmediate(){
 		breakFire=true;
 		StopCoroutine("FiringDelay");
@@ -101,6 +115,7 @@ public class Gun : MonoBehaviour {
 		//breakFire=false;
 	}
 	
+	//Counts the delay between two consecutive shots, and re-enables firing
 	IEnumerator FiringDelay(){
 		if(type=='f'){
 			currentFireDelay=0;
