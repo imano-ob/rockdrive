@@ -12,6 +12,7 @@ public class Character : MonoBehaviour {
 	public int hp=10;
 	public int level=1;
 	public int power=1;
+	public string typeS="f";
 	public char type='f';
 	public string state;
 	bool facingRight=true;
@@ -28,6 +29,7 @@ public class Character : MonoBehaviour {
 	CharacterMotor characterMotor;
 	// Use this for initialization
 	void Start () {
+		type= typeS[0];
 		impactReceiver= gameObject.GetComponent("ImpactReceiver")as ImpactReceiver;
 		meshRenderer= gameObject.GetComponent("MeshRenderer")as MeshRenderer;
 		characterMotor= gameObject.GetComponent("CharacterMotor")as CharacterMotor;
