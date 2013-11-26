@@ -86,7 +86,8 @@ public class PlayerStateControl : MonoBehaviour {
 		
 			if(Input.GetKeyUp("x") && playerData.type=='w'){
 				gameObject.BroadcastMessage("stopFireImmediate");
-				StartCoroutine(shootDelay());
+				gameObject.BroadcastMessage("stopFire");
+				//StartCoroutine(shootDelay());
 		}
 			
 		

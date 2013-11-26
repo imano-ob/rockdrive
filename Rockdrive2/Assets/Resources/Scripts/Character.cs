@@ -83,6 +83,7 @@ public class Character : MonoBehaviour {
 			yield return new WaitForSeconds(Time.deltaTime);
 			currentDamageDelay= currentDamageDelay+Time.deltaTime;
 			meshRenderer.enabled=false;
+			
 			yield return new WaitForSeconds(Time.deltaTime);
 			currentDamageDelay= currentDamageDelay+Time.deltaTime;
 			meshRenderer.enabled=true;
@@ -141,6 +142,7 @@ public class Character : MonoBehaviour {
 	//Tipo
 	void changeType(char newType){
 		type= newType;	
+		typeS=""+newType;
 		Debug.Log("New Type: "+newType);
 	}
 }

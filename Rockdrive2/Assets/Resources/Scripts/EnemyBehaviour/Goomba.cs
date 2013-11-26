@@ -11,6 +11,7 @@ public class Goomba : MonoBehaviour {
 	bool activated=false;
 	// Use this for initialization
 	void Start () {
+		Physics.IgnoreCollision(GameObject.Find("Player").collider,gameObject.collider);
 		motor= gameObject.GetComponent("CharacterMotor")as CharacterMotor;
 		controller= gameObject.GetComponent("CharacterController")as CharacterController;
 		if(moveRight==true)

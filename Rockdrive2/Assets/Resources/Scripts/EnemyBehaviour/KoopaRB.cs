@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Koopa : MonoBehaviour {
+public class KoopaRB : MonoBehaviour {
 	
 	CharacterMotor motor;
 	CharacterController controller;
@@ -15,12 +15,12 @@ public class Koopa : MonoBehaviour {
 	bool activated=false;
 	// Use this for initialization
 	void Start () {
-		motor= gameObject.GetComponent("CharacterMotor")as CharacterMotor;
+		//motor= gameObject.GetComponent("CharacterMotor")as CharacterMotor;
 		Physics.IgnoreCollision(GameObject.Find("Player").collider,gameObject.collider);
-		controller= gameObject.GetComponent("CharacterController")as CharacterController;
-		//body= gameObject.GetComponent("Rigidbody")as Rigidbody;
-		//collider= gameObject.GetComponent("BoxCollider") as BoxCollider;
-		//distToGround = collider.bounds.extents.y;
+		//controller= gameObject.GetComponent("CharacterController")as CharacterController;
+		body= gameObject.GetComponent("Rigidbody")as Rigidbody;
+		collider= gameObject.GetComponent("BoxCollider") as BoxCollider;
+		distToGround = collider.bounds.extents.y;
 		player= GameObject.Find("Player");
 		if(moveRight==true)
 				BroadcastMessage("changeState","right");
@@ -28,7 +28,10 @@ public class Koopa : MonoBehaviour {
 				BroadcastMessage("changeState","left");
 	}
 	
-	
+	public bool IsGrounded(){
+		//Debug.Log(Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f));
+		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,21 +48,21 @@ public class Koopa : MonoBehaviour {
 			
 			if(moveRight==true){
 			
-				if(controller.isGrounded== true){
+				if(IsGrounded()== true){
 				//if(body.==true){
 					Debug.Log("AAA");
-					motor.SetVelocity(new Vector3(-speed,motor.movement.velocity.y,motor.movement.velocity.z));
+					//motor.SetVelocity(new Vector3(-speed,motor.movement.velocity.y,motor.movement.velocity.z));
 					//body.AddForce(Vector3.left*speed);
-					//body.velocity=new Vector3(-speed,body.velocity.y,body.velocity.z);
+					body.velocity=new Vector3(-speed,body.velocity.y,body.velocity.z);
 					//body.
 				}
 				
 			}else
-				if(controller.isGrounded==true){
-				motor.SetVelocity(new Vector3(speed,motor.movement.velocity.y,motor.movement.velocity.z));
+				if(IsGrounded()==true){
+				//motor.SetVelocity(new Vector3(speed,motor.movement.velocity.y,motor.movement.velocity.z));
 				//body.AddForce(new Vector3(-speed,0,0));
 				//body.AddForce(Vector3.left*speed);
-				//body.velocity=new Vector3(speed,body.velocity.y,body.velocity.z);
+				body.velocity=new Vector3(speed,body.velocity.y,body.velocity.z);
 			}
 		}
 	}

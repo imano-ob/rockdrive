@@ -16,7 +16,18 @@ public class DamagePlayerOnTouch : MonoBehaviour {
 	
 	}
 	
+	
 	void OnTriggerEnter(Collider col){
+		if(col.name=="Player"){
+			if(transform.position.x>=col.transform.position.x)knockback=-1*knockback;
+			DamageParams dp= new DamageParams(damage,type[0],false,new Vector3(knockback,10f,0));
+			
+			col.BroadcastMessage("Damage",dp);
+			
+		}
+	}
+	
+	void OnTriggerStay(Collider col){
 		if(col.name=="Player"){
 			if(transform.position.x>=col.transform.position.x)knockback=-1*knockback;
 			DamageParams dp= new DamageParams(damage,type[0],false,new Vector3(knockback,10f,0));
