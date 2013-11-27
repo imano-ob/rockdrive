@@ -23,6 +23,15 @@ public class DamageParams {
 		Debug.Log("DP "+damage+" "+type);
 		hasKnockback=true;
 	}
+	
+	public DamageParams(int dam,char typ,bool friend,Vector3 knockb,bool over){
+		damage=dam;
+		type=typ;
+		friendly=friend;
+		knockback=knockb;
+		Debug.Log("DP "+damage+" "+type);
+		hasKnockback=over;
+	}
 	// Use this for initialization
 	void Start () {
 	

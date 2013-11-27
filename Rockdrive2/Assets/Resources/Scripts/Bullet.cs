@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour {
 	public bool friendly=true;
 	public bool pierce=false;
 	public float ttl=50;
+	public bool knock=false;
 	public Bullet(int dam,char typ){
 		damage=dam;
 		type=typ;
@@ -35,10 +36,22 @@ public class Bullet : MonoBehaviour {
 		Character targetData= target.GetComponent("Character")as Character;
 		if( targetData!=null && targetData.friend!=friendly){
 			//Debug.Log("DUCK!!!");
-			DamageParams damp= new DamageParams(damage,type,friendly);
-			Debug.Log("Criar DP "+damage+" "+type+" friend-"+friendly+" para "+target.gameObject.name);
-			target.BroadcastMessage("Damage",damp);
-			if(pierce==false)Destroy(gameObject);
+			if(knock==false){
+				
+			
+				DamageParams damp= new DamageParams(damage,type,friendly);
+				Debug.Log("Criar DP "+damage+" "+type+" friend-"+friendly+" para "+target.gameObject.name);
+				target.BroadcastMessage("Damage",damp);
+				if(pierce==false)Destroy(gameObject);
+				
+			}else{
+				float knockback=10f;
+				if(friendly) knockback=3f;
+				if(transform.position.x>=target.transform.position.x)knockback=-1*knockback;
+				DamageParams dp= new DamageParams(damage,type,friendly,new Vector3(knockback,10f,0));	
+				target.BroadcastMessage("Damage",dp);
+				if(pierce==false)Destroy(gameObject);
+			}
 		}
 	}
 	/*

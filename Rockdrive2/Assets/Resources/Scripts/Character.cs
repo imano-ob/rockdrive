@@ -36,8 +36,8 @@ public class Character : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+		if(transform.position.y<=-8f) BroadcastMessage("PlayerDeath");
 	}
 	
 	void changeState(string newState){
@@ -57,19 +57,19 @@ public class Character : MonoBehaviour {
 				Debug.Log(this.name+" hit type-"+type+" with:"+dp.type );
 				if(type=='f'){
 					Debug.Log("lol");
-					if(dp.type=='w') superEffective(dp);
-					if(dp.type=='f') normalEffective(dp);
-					if(dp.type=='g') notEffective(dp);
+					if(dp.type=='w') gameObject.BroadcastMessage("superEffective",dp);
+					if(dp.type=='f')  gameObject.BroadcastMessage("normalEffective",dp);
+					if(dp.type=='g') gameObject.BroadcastMessage("notEffective",dp);
 				}
 				if(type=='w'){
-					if(dp.type=='g') superEffective(dp);
-					if(dp.type=='w') normalEffective(dp);
-					if(dp.type=='f') notEffective(dp);
+					if(dp.type=='g')  gameObject.BroadcastMessage("superEffective",dp);
+					if(dp.type=='w')gameObject.BroadcastMessage("normalEffective",dp);
+					if(dp.type=='f') gameObject.BroadcastMessage("notEffective",dp);
 				}
 				if(type=='g'){
-					if(dp.type=='f') superEffective(dp);
-					if(dp.type=='g') normalEffective(dp);
-					if(dp.type=='w') notEffective(dp);
+					if(dp.type=='f')  gameObject.BroadcastMessage("superEffective",dp);
+					if(dp.type=='g') gameObject.BroadcastMessage("normalEffective",dp);
+					if(dp.type=='w') gameObject.BroadcastMessage("notEffective",dp);
 				}
 			}
 			if(damageDelayEnabled)StartCoroutine(DamageDelay());
@@ -114,6 +114,12 @@ public class Character : MonoBehaviour {
 			dp.knockback= new Vector3(dp.knockback.x*1.5f,dp.knockback.y,dp.knockback.z);
 			Knockback(dp.knockback);
 		}
+		
+		if(friend=false){
+			dp.knockback= new Vector3(dp.knockback.x*1.5f,dp.knockback.y,dp.knockback.z);
+			Knockback(dp.knockback);
+		}
+		
 		checkDeath();
 	}
 	void normalEffective(DamageParams dp){
@@ -136,7 +142,10 @@ public class Character : MonoBehaviour {
 	
 	void checkDeath(){
 		Debug.Log("Checking for death HP:"+maxHp);
-		if(hp<=0) Destroy(gameObject);
+		if(hp<=0){
+			if(gameObject.name!="Player")Destroy(gameObject);
+			else BroadcastMessage("PlayerDeath");
+		}
 	}
 	
 	//Tipo

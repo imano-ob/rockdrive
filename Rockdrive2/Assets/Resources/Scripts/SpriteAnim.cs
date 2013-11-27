@@ -21,6 +21,7 @@ public class SpriteAnim : MonoBehaviour {
 	public bool moving=true;
 	public bool shooting=false;
 	public string shootingTag="fire";
+	public bool playOnceAndDestroy=false;
 	CharacterController player;
 	
 	// Use this for initialization
@@ -84,7 +85,10 @@ public class SpriteAnim : MonoBehaviour {
 				//Debug.Log("boo "+anim_current.ToString());
 				delay_current=0;
 				anim_current++;
-				if(anim_current>=anim_sprites)anim_current=0;
+				if(anim_current>=anim_sprites){
+					anim_current=0;
+					if(playOnceAndDestroy==true) Destroy(gameObject);
+				}
 				//float dx=(float)(anim_sprites/spriteSheetSize)*(float)(spriteWidth-spriteSheetSize+anim_current*spriteWidth);
 				float dx= (spriteWidth)/spriteSheetWidth;
 				//Debug.Log("dx "+dx.ToString());

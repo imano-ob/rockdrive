@@ -88,7 +88,7 @@ public class Gun : MonoBehaviour {
 			else i=-1;
 		
 		GameObject bullet= Instantiate(Resources.Load("Bullets/"+bulletName)as GameObject,transform.position+new Vector3(i*centerDiff,0,0),Quaternion.Euler(new Vector3(90,180,0) ))as GameObject;
-		bullet.BroadcastMessage("setFriendly",true);
+		bullet.BroadcastMessage("setFriendly",friendly);
 		if(facingRight==true)bullet.BroadcastMessage("setSide",true);
 			else bullet.BroadcastMessage("setSide",false);
 		
