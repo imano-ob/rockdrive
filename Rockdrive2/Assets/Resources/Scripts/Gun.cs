@@ -27,9 +27,10 @@ public class Gun : MonoBehaviour {
 	public string[] waterBulletTable;//idem, agua
 	public string[] grassBulletTable;//idem, grama
 	public bool breakFire=false;
+	Vector3 startpos;
 	// Use this for initialization
 	void Start () {
-	
+		startpos=transform.localPosition;
 	}
 	
 	// Update is called once per frame
@@ -77,6 +78,7 @@ public class Gun : MonoBehaviour {
 	
 	//Starts the firing process, call this with BroadcastMessage to fire
 	void Fire(){
+		transform.localPosition=startpos;
 		breakFire=false;
 		FireBullet();
 	}

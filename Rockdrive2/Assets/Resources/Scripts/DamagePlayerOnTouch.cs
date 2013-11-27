@@ -8,7 +8,8 @@ public class DamagePlayerOnTouch : MonoBehaviour {
 	public float knockback= 30f;
 	// Use this for initialization
 	void Start () {
-	
+		Character character=transform.parent.gameObject.GetComponent("Character")as Character;
+		type=""+character.type;
 	}
 	
 	// Update is called once per frame

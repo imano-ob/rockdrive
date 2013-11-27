@@ -47,7 +47,7 @@ public class Koopa : MonoBehaviour {
 			
 				if(controller.isGrounded== true){
 				//if(body.==true){
-					Debug.Log("AAA");
+					//Debug.Log("AAA");
 					motor.SetVelocity(new Vector3(-speed,motor.movement.velocity.y,motor.movement.velocity.z));
 					//body.AddForce(Vector3.left*speed);
 					//body.velocity=new Vector3(-speed,body.velocity.y,body.velocity.z);

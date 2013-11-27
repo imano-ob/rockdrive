@@ -13,7 +13,7 @@ public class MoveToPlayer : MonoBehaviour {
 		//Vector3 distance= transform.position- GameObject.Find("Player").transform.position;
 		targetPosition= GameObject.Find("Player").transform.position;
 		
-		Debug.Log("jogador em"+ targetPosition);
+		//Debug.Log("jogador em"+ targetPosition);
 		//angle= Vector3.Angle(GameObject.Find("Player").transform.position,transform.position)-90;
 		//transform.Rotate(new Vector3(0,angle,0));
 		

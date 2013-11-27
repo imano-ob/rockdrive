@@ -13,7 +13,8 @@ CharacterMotor motor;
 	int currentDelay;
 	// Use this for initialization
 	void Start () {
-		Physics.IgnoreCollision(GameObject.Find("Player").collider,gameObject.collider);
+		player=GameObject.Find("Player");
+		Physics.IgnoreCollision(player.collider,gameObject.collider);
 	//	motor= gameObject.GetComponent("CharacterMotor")as CharacterMotor;
 	//	controller= gameObject.GetComponent("CharacterController")as CharacterController;
 		if(moveRight==true)
@@ -24,7 +25,21 @@ CharacterMotor motor;
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		
+		
+		
 		if(gameObject.renderer.isVisible){
+			
+			if(player.transform.position.x> transform.position.x && moveRight==true){
+				moveRight=false;
+				BroadcastMessage("changeState","left");
+			}
+			
+			if(player.transform.position.x< transform.position.x && moveRight==false){
+				moveRight=true;
+				BroadcastMessage("changeState","right");
+			}
+			
 			currentDelay++;
 			if(delay<=currentDelay){
 			currentDelay=0;	

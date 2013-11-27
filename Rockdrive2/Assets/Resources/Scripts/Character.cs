@@ -17,7 +17,7 @@ public class Character : MonoBehaviour {
 	public string state;
 	bool facingRight=true;
 	public bool damageEnabled;
-	bool damageable=true;
+	public bool damageable=true;
 	public bool damageDelayEnabled;
 	public float damageDelay;
 	public float currentDamageDelay;
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour {
 			 Debug.Log(this.name);
 			
 			if(friend!=dp.friendly){
-				Debug.Log(this.name+" hit type-"+type+" with:"+dp.type );
+				Debug.Log(this.name+" with"+friend+" hit by"+ dp.friendly+" type-"+type+" with:"+dp.type );
 				if(type=='f'){
 					Debug.Log("lol");
 					if(dp.type=='w') gameObject.BroadcastMessage("superEffective",dp);
@@ -115,10 +115,6 @@ public class Character : MonoBehaviour {
 			Knockback(dp.knockback);
 		}
 		
-		if(friend=false){
-			dp.knockback= new Vector3(dp.knockback.x*1.5f,dp.knockback.y,dp.knockback.z);
-			Knockback(dp.knockback);
-		}
 		
 		checkDeath();
 	}
