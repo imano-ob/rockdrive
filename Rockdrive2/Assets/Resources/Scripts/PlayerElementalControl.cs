@@ -2,10 +2,11 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerElementalControl : MonoBehaviour {
-	
+	GameObject HUD;
 	Character player;
 	// Use this for initialization
 	void Start () {
+		HUD= GameObject.Find("HUD");
 		player= gameObject.GetComponent("Character")as Character;
 	}
 	
@@ -14,16 +15,22 @@ public class PlayerElementalControl : MonoBehaviour {
 		
 	}
 	
+	void updateHUD(){
+	}
+	
 	void previousType(){
 		switch(player.type){
 		case 'f':
 			gameObject.BroadcastMessage("changeType",'g');
+			HUD.BroadcastMessage("changeType",'g');
 			break;
 		case 'w':
 			gameObject.BroadcastMessage("changeType",'f');
+			HUD.BroadcastMessage("changeType",'f');
 			break;
 		case 'g':
 			gameObject.BroadcastMessage("changeType",'w');
+			HUD.BroadcastMessage("changeType",'w');
 			break;
 		}
 	}
@@ -32,12 +39,15 @@ public class PlayerElementalControl : MonoBehaviour {
 		switch(player.type){
 		case 'f':
 			gameObject.BroadcastMessage("changeType",'w');
+			HUD.BroadcastMessage("changeType",'w');
 			break;
 		case 'w':
 			gameObject.BroadcastMessage("changeType",'g');
+			HUD.BroadcastMessage("changeType",'g');
 			break;
 		case 'g':
 			gameObject.BroadcastMessage("changeType",'f');
+			HUD.BroadcastMessage("changeType",'f');
 			break;
 		}
 	}
